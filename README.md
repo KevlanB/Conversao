@@ -21,7 +21,7 @@ Escolhi utilizar um arquivo csv pois o PostgreSql é mais rápido para inserir u
 ## 3. Instalação
 1. Clone o repositório:
     ```bash
-    git clone https://link-do-repositorio.git
+    git clone git@github.com:KevlanB/Conversao.git
     ```
 
 ## 2. Suba a aplicação com docker:
