@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: . # Usa o diretório raiz como contexto
+      dockerfile: docker/backend.Dockerfile
+    ports:
+      - "3001:3001"
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - backend/.env
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=kevlan
+      - DB_PASSWORD="#Kbsc11071997"
+      - DB_NAME=desafio_conversao
+      - DB_SCHEMA=inside
+    networks:
+      - ilumeo-network
+
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/frontend.Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    env_file:
+      - frontend/.env.local
+    networks:
+      - ilumeo-network
+
+  db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: kevlan
+      POSTGRES_PASSWORD: "#Kbsc11071997"
+      POSTGRES_DB: desafio_conversao
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./docker/:/docker-entrypoint-initdb.d/  # Monta todos os scripts e o CSV
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U kevlan -d desafio_conversao"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - ilumeo-network
+
+networks:
+  ilumeo-network:
+
+volumes:
+  pgdata:
