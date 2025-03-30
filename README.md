@@ -19,16 +19,15 @@ Escolhi utilizar um arquivo csv pois o PostgreSql é mais rápido para inserir u
 - Git
 
 ## 3. Instalação
-1. Clone o repositório:
-    ```bash
-    git clone git@github.com:KevlanB/Conversao.git
-    ```
+Clone o repositório:
 
+     git clone git@github.com:KevlanB/Conversao.git
+    
 ## 2. Suba a aplicação com docker:
 Na pasta ilumeo rode o comando:
-    ```bash
+
     docker-compose up --build
-    ```
+
 Aguarde o docker instalar as dependências e subir os contêineres.
 
 ## 4. Arquitetura do Projeto
